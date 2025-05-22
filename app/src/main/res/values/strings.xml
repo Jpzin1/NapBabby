@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LoginApp</string>
+    <string name="app_logo">Logo do aplicativo</string>
+    <string name="seja_bem_vindo">SEJA BEM-VINDO</string>
+    <string name="faca_login_na_sua_conta">Faça login na sua conta</string>
+    <string name="email">E-mail</string>
+    <string name="senha">Senha</string>
+    <string name="lembre_se_de_mim">Lembre-se de mim</string>
+    <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
+    <string name="login">LOGIN</string>
+    <string name="cadastre_se">Cadastre-se</string>
+    <string name="login_com">Login com</string>
+    <string name="login_com_google">Login com Google</string>
+</resources>
