@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LoginApp</string>
     <string name="app_logo">Logo do aplicativo</string>
-    <string name="seja_bem_vindo">SEJA BEM-VINDOO</string>
+    <string name="seja_bem_vindo">SEJA BEM-VINDO</string>
     <string name="faca_login_na_sua_conta">Faça login na sua conta</string>
     <string name="email">E-mail</string>
     <string name="senha">Senha</string>
