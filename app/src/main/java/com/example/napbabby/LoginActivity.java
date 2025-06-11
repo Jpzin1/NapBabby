@@ -12,18 +12,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.credentials.CredentialManager;
-import androidx.credentials.CustomCredential;
-import androidx.credentials.GetCredentialRequest;
-import androidx.credentials.GetCredentialResponse;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +38,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private static final String TYPE_GOOGLE_ID_TOKEN_CREDENTIAL = "com.google.android.libraries.identity.googleid.GOOGLE_ID_TOKEN_CREDENTIAL";
 
     private EditText etEmail, etPassword;
     private CheckBox cbRememberMe;
@@ -43,8 +47,11 @@ public class LoginActivity extends AppCompatActivity {
 
     // Firebase Auth
     private FirebaseAuth mAuth;
-    // Credential Manager
-    private CredentialManager credentialManager;
+    // Google Sign In Client
+    private GoogleSignInClient mGoogleSignInClient;
+
+    // ActivityResultLauncher para substituir startActivityForResult
+    private ActivityResultLauncher<Intent> signInLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +61,36 @@ public class LoginActivity extends AppCompatActivity {
         // Inicializar Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // Inicializar Credential Manager
-        credentialManager = CredentialManager.create(this);
+        // Configurar Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // Configurar ActivityResultLauncher para Google Sign In
+        signInLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Resultado retornado da intent de login do Google
+                        Intent data = result.getData();
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                        try {
+                            // Login Google bem-sucedido, autenticar com Firebase
+                            GoogleSignInAccount account = task.getResult(ApiException.class);
+                            Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                            firebaseAuthWithGoogle(account.getIdToken());
+                        } catch (ApiException e) {
+                            // Falha no login Google
+                            Log.w(TAG, "Google sign in failed", e);
+                            Toast.makeText(LoginActivity.this, "Falha no login com Google: " + e.getStatusCode(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
 
         // Inicializar componentes
         initViews();
@@ -83,42 +118,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateAndLogin();
-            }
+        btnLogin.setOnClickListener(v -> validateAndLogin());
+
+        tvForgotPassword.setOnClickListener(v -> {
+            // Implementar navegação para tela de recuperação de senha
+            Toast.makeText(LoginActivity.this, "Recuperação de senha", Toast.LENGTH_SHORT).show();
         });
 
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Implementar navegação para tela de recuperação de senha
-                Toast.makeText(LoginActivity.this, "Recuperação de senha", Toast.LENGTH_SHORT).show();
-            }
+        tvRegister.setOnClickListener(v -> {
+            // Implementar navegação para tela de cadastro
+            Toast.makeText(LoginActivity.this, "Cadastro de novo usuário", Toast.LENGTH_SHORT).show();
         });
 
-        tvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Implementar navegação para tela de cadastro
-                Toast.makeText(LoginActivity.this, "Cadastro de novo usuário", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnGoogleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Implementar login com Google
-                signInWithGoogle();
-            }
+        btnGoogleLogin.setOnClickListener(v -> {
+            // Implementar login com Google
+            signInWithGoogle();
         });
     }
 
     private void validateAndLogin() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        boolean rememberMe = cbRememberMe.isChecked();
 
         // Validação simples
         if (TextUtils.isEmpty(email)) {
@@ -147,87 +167,26 @@ public class LoginActivity extends AppCompatActivity {
 
     // Método para iniciar o processo de login com Google
     private void signInWithGoogle() {
-        try {
-            // Criar a solicitação de login do Google
-            GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
-                    .setFilterByAuthorizedAccounts(true)
-                    .setServerClientId(getString(R.string.default_web_client_id))
-                    .build();
-
-            // Criar a solicitação do Gerenciador de credenciais
-            GetCredentialRequest request = new GetCredentialRequest.Builder()
-                    .addCredentialOption(googleIdOption)
-                    .build();
-
-            // Iniciar o fluxo de autenticação
-            credentialManager.getCredential(
-                    this,
-                    request,
-                    null,
-                    getMainExecutor(),
-                    this::handleSignIn,
-                    this::handleSignInError
-            );
-        } catch (Exception e) {
-            Log.e(TAG, "Erro ao iniciar login com Google", e);
-            Toast.makeText(this, "Erro ao iniciar login com Google: " + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Método para tratar o resultado da autenticação
-    private void handleSignIn(GetCredentialResponse result) {
-        try {
-            // Verificar se a credencial é do tipo Google ID
-            if (result.getCredential() instanceof CustomCredential) {
-                CustomCredential credential = (CustomCredential) result.getCredential();
-
-                if (TYPE_GOOGLE_ID_TOKEN_CREDENTIAL.equals(credential.getType())) {
-                    // Criar token de ID do Google
-                    GoogleIdTokenCredential googleIdTokenCredential =
-                            GoogleIdTokenCredential.createFrom(credential.getData());
-
-                    // Autenticar no Firebase com o token
-                    firebaseAuthWithGoogle(googleIdTokenCredential.getIdToken());
-                } else {
-                    Log.w(TAG, "Credencial não é do tipo Google ID!");
-                    Toast.makeText(this, "Tipo de credencial não suportado",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Erro ao processar credencial", e);
-            Toast.makeText(this, "Erro ao processar credencial: " + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Método para tratar erros na autenticação
-    private void handleSignInError(Throwable e) {
-        Log.e(TAG, "Erro na autenticação com Google", e);
-        Toast.makeText(this, "Erro na autenticação com Google: " + e.getMessage(),
-                Toast.LENGTH_SHORT).show();
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        signInLauncher.launch(signInIntent);
     }
 
     // Método para autenticar no Firebase com o token do Google
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Login bem-sucedido
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // Login falhou
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Falha na autenticação: " +
-                                    task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Login bem-sucedido
+                        Log.d(TAG, "signInWithCredential:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    } else {
+                        // Login falhou
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "Falha na autenticação: " +
+                                task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
                 });
     }

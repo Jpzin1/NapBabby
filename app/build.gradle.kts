@@ -31,6 +31,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildToolsVersion = "35.0.0"
+    ndkVersion = "28.0.13004108"
 }
 
 dependencies {
@@ -46,6 +47,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    // Google Sign-In
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
     //GOOGLE AUTH
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
