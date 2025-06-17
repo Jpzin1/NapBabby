@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <!-- Logo do App -->
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="40dp"
+            android:tint="@color/white"
+            android:src="@mipmap/logo_babby_foreground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Título Principal -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Primeiros Passos"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo" />
+
+        <!-- Subtítulo -->
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Conte sobre o seu bebê!"
+            android:textColor="@color/white_80"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <!-- Primeira Pergunta -->
+        <TextView
+            android:id="@+id/tv_question1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Qual foi o horario do último sono do seu bebê?"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_subtitle" />
+
+        <!-- Container para os campos de horário do sono -->
+        <LinearLayout
+            android:id="@+id/ll_sleep_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_container"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_question1">
+
+            <!-- Ícone da lua -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_moon"
+                android:tint="@color/purple_dark" />
+
+            <!-- Campo de hora -->
+            <EditText
+                android:id="@+id/et_sleep_hour"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:background="@drawable/time_input_background"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@color/purple_dark"
+                android:textColorHint="@color/purple_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="até"
+                android:textColor="@color/purple_dark"
+                android:textSize="14sp" />
+
+            <!-- Ícone do sol -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_sun"
+                android:tint="@color/yellow" />
+
+            <!-- Campo de hora -->
+            <EditText
+                android:id="@+id/et_wake_hour"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:background="@drawable/time_input_background"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@color/purple_dark"
+                android:textColorHint="@color/purple_light"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- Segunda Pergunta -->
+        <TextView
+            android:id="@+id/tv_question2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="E o horário da Alimentação?"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_sleep_time" />
+
+        <!-- Container para os campos de horário da alimentação -->
+        <LinearLayout
+            android:id="@+id/ll_feeding_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_container_background"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_question2">
+
+            <!-- Ícone da mamadeira -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_bottle"
+                android:tint="@color/purple_dark" />
+
+            <!-- Campo de hora -->
+            <EditText
+                android:id="@+id/et_feeding_hour1"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:background="@drawable/time_input_background"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@color/purple_dark"
+                android:textColorHint="@color/purple_light"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="até"
+                android:textColor="@color/purple_dark"
+                android:textSize="14sp" />
+
+            <!-- Campo de hora -->
+            <EditText
+                android:id="@+id/et_feeding_hour2"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:background="@drawable/time_input_background"
+                android:gravity="center"
+                android:hint="00"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@color/purple_dark"
+                android:textColorHint="@color/purple_light"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <!-- Botões de Navegação -->
+        <LinearLayout
+            android:id="@+id/ll_navigation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_feeding_time">
+
+            <!-- Botão Voltar -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="120dp"
+                android:background="@drawable/navigation_button_background"
+                android:src="@drawable/ic_arrow_left"
+                android:tint="@color/white" />
+
+            <!-- Botão Avançar -->
+            <ImageButton
+                android:id="@+id/btn_next"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/navigation_button_background"
+                android:src="@drawable/ic_arrow_right"
+                android:tint="@color/white" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+
