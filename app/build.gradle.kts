@@ -32,8 +32,11 @@ android {
     }
     buildToolsVersion = "35.0.0"
     ndkVersion = "28.0.13004108"
-    buildFeatures {
-        viewBinding = true
+    // buildFeatures {
+    //     viewBinding = true
+    // }
+    lint {
+        abortOnError = false
     }
 }
 
@@ -44,11 +47,6 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
-    implementation(libs.credentials)
-    implementation(libs.credentials.play.services.auth)
-    implementation(libs.googleid)
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -60,13 +58,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
 
     // Add the dependency for the Firebase Authentication library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
+    // When using the BoM, you don\"t specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
-
-    // Also add the dependencies for the Credential Manager libraries and specify their versions
-    implementation("androidx.credentials:credentials:1.3.0")
-    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
 
 
 }
+

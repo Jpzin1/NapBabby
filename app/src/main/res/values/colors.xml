@@ -8,6 +8,7 @@
 
     <color name="gradient_start">#222E61</color>
     <color name="gradient_end">#5783BD</color>
+    <color name="gradient_middle">#4A6290</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -25,28 +26,27 @@
 
     <color name="gender_selected">#FFFFFF</color>
     <color name="gender_unselected">@android:color/transparent</color>
-    <color name="isso_aaa">A1CFE8</color>
+    <color name="isso_aaa">#A1CFE8</color>
 
 
 
-        <!-- Cores principais do app -->
+    <!-- Cores principais do app -->
     <color name="purple_dark">#3D4A7A</color>
     <color name="purple_medium">#5B6B9D</color>
     <color name="purple_light">#8A9BC7</color>
 
-        <!-- Cores de texto -->
+    <!-- Cores de texto -->
     <color name="white_80">#CCFFFFFF</color>
 
-        <!-- Cores de destaque -->
+    <!-- Cores de destaque -->
     <color name="yellow">#FFD700</color>
 
-        <!-- Cores dos containers -->
+    <!-- Cores dos containers -->
     <color name="container_background">#80FFFFFF</color>
     <color name="input_background">#FFFFFF</color>
 
-        <!-- Cores transparentes -->
+    <!-- Cores transparentes -->
     <color name="transparent">#00000000</color>
 
-
-
 </resources>
+

@@ -8,12 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.napbabby.databinding.ActivityCadastroBinding;
 import android.content.Intent;
 import android.widget.Button;
 
@@ -23,7 +17,7 @@ public class cadastro extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro); // Seu arquivo de layout
+        setContentView(R.layout.cadastro); // Seu arquivo de layout
 
         // 1. Encontre o botão pelo ID definido no XML
         // Certifique-se de que o ID no XML para o botão "Cadastrar" seja "btnCadastrar"
@@ -47,3 +41,4 @@ public class cadastro extends AppCompatActivity {
         });
     }
 }
+

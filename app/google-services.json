@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "340033599316-k2nqchscpa780v70ued8r0im0tbv116s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.napbabby",
+            "certificate_hash": "b27feca7f7bac1d326cc79e993c143e964e46a9a"
+          }
+        },
+        {
           "client_id": "340033599316-le273flrovrakqrt272v99fe3fbi6rep.apps.googleusercontent.com",
           "client_type": 3
         }
