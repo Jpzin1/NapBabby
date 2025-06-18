@@ -8,23 +8,66 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.NapBabby"
         tools:targetApi="31">
-        <activity
-            android:name=".cadastro"
-            android:exported="false"
-            android:theme="@style/Theme.NapBabby" />
+
+        <!-- Activity de Login (Principal) -->
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.NapBabby">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Activity de Cadastro -->
+        <activity
+            android:name=".CadastroActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NapBabby" />
+
+        <!-- Activity Primeiros Passos -->
+        <activity
+            android:name=".PrimeirosPassosActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NapBabby" />
+
+        <!-- Activity Home -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NapBabby" />
+
+        <!-- Activity Registrar Sono -->
+        <activity
+            android:name=".RegistrarSonoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NapBabby" />
+
+        <!-- Activity Registrar Alimentação -->
+        <activity
+            android:name=".RegistrarAlimentacaoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NapBabby" />
+
+        <!-- Activity Histórico de Sono -->
+        <activity
+            android:name=".HistoricoSonoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NapBabby" />
+
+        <!-- Activity Configurações -->
+        <activity
+            android:name=".ConfiguracoesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NapBabby" />
+
     </application>
 
 </manifest>
+

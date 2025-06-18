@@ -126,8 +126,9 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         tvRegister.setOnClickListener(v -> {
-            // Implementar navegação para tela de cadastro
-            Toast.makeText(LoginActivity.this, "Cadastro de novo usuário", Toast.LENGTH_SHORT).show();
+            // Navegar para tela de cadastro
+            Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+            startActivity(intent);
         });
 
         btnGoogleLogin.setOnClickListener(v -> {
@@ -156,9 +157,22 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Aqui você implementaria a lógica de autenticação real
-        // Por enquanto, apenas exibimos uma mensagem de sucesso
-        Toast.makeText(this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
+        // Autenticar com Firebase
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Login bem-sucedido
+                        Log.d(TAG, "signInWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    } else {
+                        // Login falhou
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "Falha na autenticação: " +
+                                task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
+                });
     }
 
     private boolean isValidEmail(String email) {
@@ -194,14 +208,14 @@ public class LoginActivity extends AppCompatActivity {
     // Método para atualizar a interface após autenticação
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            // Usuário está logado, atualizar UI ou navegar para próxima tela
-            Toast.makeText(this, "Bem-vindo, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-            // Aqui você pode iniciar uma nova Activity
-            // Intent intent = new Intent(this, MainActivity.class);
-            // startActivity(intent);
-            // finish();
+            // Usuário está logado, navegar para a tela Primeiros Passos
+            Toast.makeText(this, "Bem-vindo, " + (user.getDisplayName() != null ? user.getDisplayName() : user.getEmail()), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, PrimeirosPassosActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             // Usuário não está logado, manter na tela de login
         }
     }
 }
+

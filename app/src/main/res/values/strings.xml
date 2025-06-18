@@ -16,6 +16,7 @@
     <string name="login_com_google">Login com Google</string>
     <string name="client_id">340033599316-le273flrovrakqrt272v99fe3fbi6rep.apps.googleusercontent.com</string>
     <string name="cadastro_text">Venha fazer parte da nossa família</string>
+    <string name="ja_tem_conta">Já tem conta? Faça login</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

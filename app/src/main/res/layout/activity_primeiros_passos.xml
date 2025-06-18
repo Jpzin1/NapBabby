@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_blue"
+    android:background="@drawable/bg_gradient"
     android:fillViewport="true">
 
     <LinearLayout
@@ -55,11 +55,12 @@
             android:id="@+id/editTextBabyName"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/rounded_edittext"
+            android:background="@drawable/bg_edit_text"
             android:hint="Nome do bebê"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textSize="16sp"
+            android:textColorHint="@color/hint_color"
             android:layout_marginBottom="32dp" />
 
         <!-- Pergunta 2: Data de Nascimento -->
@@ -75,7 +76,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/rounded_edittext"
+            android:background="@drawable/bg_edit_text"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:paddingStart="20dp"
@@ -95,9 +96,9 @@
                 android:textColor="@color/hint_color" />
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@mipmap/calendario"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_calendar"
                 android:layout_marginStart="8dp" />
 
         </LinearLayout>
@@ -134,9 +135,9 @@
                 android:background="@drawable/gender_selector">
 
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:src="@mipmap/menino"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_boy"
                     android:layout_marginBottom="12dp" />
 
                 <TextView
@@ -164,10 +165,10 @@
                 android:background="@drawable/gender_selector">
 
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginBottom="12dp"
-                    android:src="@mipmap/menina" />
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_girl"
+                    android:layout_marginBottom="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -191,7 +192,8 @@
                 android:id="@+id/btnContinue"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@mipmap/seta_foreground"
+                android:src="@drawable/ic_arrow_right"
+                android:background="@drawable/bg_button"
                 android:padding="16dp"
                 android:clickable="true"
                 android:focusable="true" />
@@ -201,3 +203,4 @@
     </LinearLayout>
 
 </ScrollView>
+
